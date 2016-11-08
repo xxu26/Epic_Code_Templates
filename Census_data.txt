@@ -1,0 +1,11 @@
+If you want to pull all of California, I believe you can download the complete census dataset with all the variables from here and then you can select the variables you want:
+http://www2.census.gov/census_2010/ 
+
+I used DataFerrett to pull some data, its slow but it lets you select the regions and variables you want:
+http://dataferrett.census.gov/
+
+To explore variable options and definitions, I like to use this website because it has an easy interface: 
+http://www.socialexplorer.com/data/ACS2014_5yr/metadata/?ds=ACS14_5yr 
+
+Also, depending on what you’re doing, it might be worth pulling the ACS data instead: 
+http://www.census.gov/programs-surveys/acs/guidance/comparing-acs-data.html 
