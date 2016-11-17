@@ -1,0 +1,49 @@
+
+**************AFTER BUILDING THE ODBC CONNECTION TO SQL SERVER, HOW TO IMPORT FILE FROM SAS TO SQL********************************
+* Clear any existing datasets in WORK directory;
+proc datasets library=work nolist kill;
+run;
+
+* Clear Output, Log, and ODS results;
+dm "log; clear; output; clear; odsresults; clear;";
+* Clear any existing libraries;
+libname _all_ clear;
+
+* Define libraries;
+LIBNAME gis odbc dsn='GIS' schema=dbo;
+
+
+		PROC IMPORT DATAFILE="Z:\ECM Dashboard Files\PHI_2016_ED_CARE_PLAN_REGISTRY_3.csv"
+			OUT=GIS.PHI_2016_ED_CARE_PLAN_REGISTRY_3
+			DBMS=CSV REPLACE;
+			GUESSINGROWS=MAX;
+		RUN;
+		QUIT;
+
+
+
+****************************************
+**POSSIBLE R WAY TO DO THE SAME
+toSQL =
+data.frame(…);
+
+write.table(toSQL,”C:\\export\\filename.txt”,quote=FALSE,sep=”,”,row.names=FALSE,col.names=FALSE,append=FALSE);
+
+    sqlQuery(channel,”BULK
+
+                INSERT Yada.dbo.yada
+
+                FROM ‘\\\\\\export\\filename.txt’
+
+                WITH
+
+                (
+                FIELDTERMINATOR = ‘,’,
+
+                ROWTERMINATOR = ‘\\n’
+                )”);
+
+SQL Server must have permission to access the network folder holding the CSV file, 
+or else this process will not work. 
+While it takes some setup with various permissions (the network folder and BULK ADMIN privileges, the reward in speed is infinitely
+more valuable).

@@ -57,3 +57,13 @@ select  pat_id,pat_enc_csn_id, 'upload date', 'your unique project id' as projec
 
 insert into RDD_HSP_ACCT (pat_id, HSP_ACCOUNT_ID, PROJECT_DATE, PROJECT_ID)
 select  pat_id,hsp_account_id, 'upload date', 'your unique project id' as project_id from 'Your_Table_name'
+
+
+
+---------------------------------------------------------------------------------------------------------------
+--------------EFECTIVELY FIND SERVICE AREA IDS AND ADDRESS FROM ENCOUNTER-------------------------------------- 
+CLARITY_DEP           AS DEP       ON ENC.DEPARTMENT_ID=DEP.DEPARTMENT_ID
+CLARITY_LOC           AS LOC       ON LOC.LOC_ID=DEP.REV_LOC_ID              --!!!!!!!! HOW TO FIND SERV ID
+CLARITY_SA            AS SA        ON SA.SERV_AREA_ID=LOC.SERV_AREA_ID       --!!!!!!!!!
+CLARITY_DEP_2         AS DEP2      ON DEP.DEPARTMENT_ID=DEP2.DEPARTMENT_ID
+CLARITY_DEP_ADDR      AS ADDR      ON DEP2.DEPARTMENT_ID=ADDR.DEPARTMENT_ID
