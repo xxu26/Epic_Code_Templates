@@ -67,3 +67,12 @@ CLARITY_LOC           AS LOC       ON LOC.LOC_ID=DEP.REV_LOC_ID              --!
 CLARITY_SA            AS SA        ON SA.SERV_AREA_ID=LOC.SERV_AREA_ID       --!!!!!!!!!
 CLARITY_DEP_2         AS DEP2      ON DEP.DEPARTMENT_ID=DEP2.DEPARTMENT_ID
 CLARITY_DEP_ADDR      AS ADDR      ON DEP2.DEPARTMENT_ID=ADDR.DEPARTMENT_ID
+
+
+-----------------------------------------------------------------------------------------------------------------
+--2016/12/22
+--check which table most recently updated
+SELECT name, [modify_date] FROM sys.tables
+
+
+
