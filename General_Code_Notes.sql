@@ -73,6 +73,7 @@ CLARITY_DEP_ADDR      AS ADDR      ON DEP2.DEPARTMENT_ID=ADDR.DEPARTMENT_ID
 --2016/12/22
 --check which table most recently updated
 SELECT name, [modify_date] FROM sys.tables
+order by modify_date desc
 
 
 
