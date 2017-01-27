@@ -76,4 +76,16 @@ SELECT name, [modify_date] FROM sys.tables
 order by modify_date desc
 
 
+insert into RDD_ENC_CSN (pat_id, PAT_ENC_CSN_ID, PROJECT_DATE, PROJECT_ID)
+select  pat_id,pat_enc_csn_id, 'upload date', 'your unique project id' as project_id from 'Your_Table_name'
+
+insert into RDD_HSP_ACCT (pat_id, HSP_ACCOUNT_ID, PROJECT_DATE, PROJECT_ID)
+select  pat_id,hsp_account_id, 'upload date', 'your unique project id' as project_id from 'Your_Table_name'
+
+
+RTRIM(LTRIM(STR(A.PAT_ID, 18))) AS PAT_ID, 
+	CASE 
+		WHEN ISNUMERIC(A.PAT_ENC_CSN_ID)=1 THEN CONVERT(NUMERIC(18,0),A.PAT_ENC_CSN_ID) 
+	END AS PAT_ENC_CSN_ID 
+
 
