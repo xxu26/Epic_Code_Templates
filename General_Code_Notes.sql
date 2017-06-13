@@ -34,22 +34,16 @@ select * into #pat_list_FINAL from
 (select * from #az_pcp_pats where pat_id not in (select old_pat_id from #pat_v2)
 union 
 select distinct new_pat_id as pat_id, old_pat_id from #pat_v2) as a
-
-
 ----------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------
-
-
 /*
 now we have a setup that automatically upload data to a database RDD_mrt on DCPWDBS149 from  a database RDD_to_149 on DCQWDBS088 daily at 6am. 
 Only our team (with CLARITY access) has read only permission to the database RDD_mrt. 
 Similarly, Ken and Clarity_system has read only access to our database RDD_to_149 .
-
 Append your data to a database RDD_to_149 on our server DCQWDBS088.
 Right now there are two tables RDD_ENC_CSN and RDD_HSP_ACCT. 
 If we decide to add new tables/ variables, we should work with DBA to update the setup.
 You can use the code below to append data to our database(RDD_to_149). 
-
 we can only upload pat_id (plus encounter id and hospital id), nothing else.
 */
 insert into RDD_ENC_CSN (pat_id, PAT_ENC_CSN_ID, PROJECT_DATE, PROJECT_ID)
@@ -57,7 +51,6 @@ select  pat_id,pat_enc_csn_id, 'upload date', 'your unique project id' as projec
 
 insert into RDD_HSP_ACCT (pat_id, HSP_ACCOUNT_ID, PROJECT_DATE, PROJECT_ID)
 select  pat_id,hsp_account_id, 'upload date', 'your unique project id' as project_id from 'Your_Table_name'
-
 ---------------------------------------------------------------------------------------------------------------
 --------------EFECTIVELY FIND SERVICE AREA IDS AND ADDRESS FROM ENCOUNTER-------------------------------------- 
 CLARITY_DEP           AS DEP       ON ENC.DEPARTMENT_ID=DEP.DEPARTMENT_ID
@@ -65,8 +58,6 @@ CLARITY_LOC           AS LOC       ON LOC.LOC_ID=DEP.REV_LOC_ID              --!
 CLARITY_SA            AS SA        ON SA.SERV_AREA_ID=LOC.SERV_AREA_ID       --!!!!!!!!!
 CLARITY_DEP_2         AS DEP2      ON DEP.DEPARTMENT_ID=DEP2.DEPARTMENT_ID
 CLARITY_DEP_ADDR      AS ADDR      ON DEP2.DEPARTMENT_ID=ADDR.DEPARTMENT_ID
-
-
 -----------------------------------------------------------------------------------------------------------------
 --2016/12/22
 --check which table most recently updated
@@ -80,12 +71,10 @@ select  pat_id,pat_enc_csn_id, 'upload date', 'your unique project id' as projec
 insert into RDD_HSP_ACCT (pat_id, HSP_ACCOUNT_ID, PROJECT_DATE, PROJECT_ID)
 select  pat_id,hsp_account_id, 'upload date', 'your unique project id' as project_id from 'Your_Table_name'
 
-
 RTRIM(LTRIM(STR(A.PAT_ID, 18))) AS PAT_ID, 
 	CASE 
 		WHEN ISNUMERIC(A.PAT_ENC_CSN_ID)=1 THEN CONVERT(NUMERIC(18,0),A.PAT_ENC_CSN_ID) 
 	END AS PAT_ENC_CSN_ID 
-
 -----------------------------------------------------------------------------------------------------------------
 --2017/06/13
 --SQL: how to exclude weekends Reference: https://stackoverflow.com/questions/1803987/how-do-i-exclude-weekend-days-in-a-sql-server-query
