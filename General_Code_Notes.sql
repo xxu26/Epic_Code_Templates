@@ -58,8 +58,6 @@ select  pat_id,pat_enc_csn_id, 'upload date', 'your unique project id' as projec
 insert into RDD_HSP_ACCT (pat_id, HSP_ACCOUNT_ID, PROJECT_DATE, PROJECT_ID)
 select  pat_id,hsp_account_id, 'upload date', 'your unique project id' as project_id from 'Your_Table_name'
 
-
-
 ---------------------------------------------------------------------------------------------------------------
 --------------EFECTIVELY FIND SERVICE AREA IDS AND ADDRESS FROM ENCOUNTER-------------------------------------- 
 CLARITY_DEP           AS DEP       ON ENC.DEPARTMENT_ID=DEP.DEPARTMENT_ID
@@ -88,4 +86,10 @@ RTRIM(LTRIM(STR(A.PAT_ID, 18))) AS PAT_ID,
 		WHEN ISNUMERIC(A.PAT_ENC_CSN_ID)=1 THEN CONVERT(NUMERIC(18,0),A.PAT_ENC_CSN_ID) 
 	END AS PAT_ENC_CSN_ID 
 
-
+-----------------------------------------------------------------------------------------------------------------
+--2017/06/13
+--SQL: how to exclude weekends Reference: https://stackoverflow.com/questions/1803987/how-do-i-exclude-weekend-days-in-a-sql-server-query
+WHERE DATENAME(WEEKDAY, contact_date) <> 'Saturday' and DATENAME(WEEKDAY, contact_date) <> 'Sunday'
+WHERE ((DATEPART(dw, contact_date) + @@DATEFIRST) % 7) NOT IN (0, 1) 
+cast( GETDATE() as date) --get today's date
+(CONVERT(VARCHAR(8), APPT.APPT_DTTM, 108) >='09:00:00' and CONVERT(VARCHAR(8), APPT.APPT_DTTM, 108)<='17:00:00') --Office hours	 
